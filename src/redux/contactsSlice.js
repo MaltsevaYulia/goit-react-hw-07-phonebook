@@ -59,7 +59,7 @@ export const contactsSlice = createSlice({
 // const getActions = type =>
 //   isAnyOf(...contactsActions.map(action => action[type]));
 
-export const contactsSlice2 = createSlice({
+export const contactsSliceBuilder = createSlice({
   name: 'contacts',
   initialState: {
     items: [],
