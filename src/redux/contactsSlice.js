@@ -113,4 +113,4 @@ export const contactsSlice2 = createSlice({
   // }),
 });
 
-// export const contactReducer = () => contactsSlice.reducer;
+export const contactReducer = () => contactsSlice.reducer;
