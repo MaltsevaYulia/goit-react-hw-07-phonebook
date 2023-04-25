@@ -1,12 +1,15 @@
-import React from "react";
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useDispatch,useSelector } from 'react-redux';
-import { filterContacts } from 'redux/contactsSlice';
+import { filterContacts } from 'redux/filterSlice';
+import { getFilterValue } from "redux/selectors";
+
 
 export const Filter = () => {
+ 
   const dispatch = useDispatch();
-  const filterValue = useSelector(state => state.filter)
+  const filterValue = useSelector(getFilterValue);
   
+ 
   const handleFilterChenge = (e) => {
     const value = e.target.value;
     dispatch(filterContacts(value));
@@ -20,7 +23,7 @@ export const Filter = () => {
 };
 
 
-Filter.protoType = {
-  value: PropTypes.string.isRequired,
-  changeFilter:PropTypes.func.isRequired,
-}
+// Filter.protoType = {
+//   value: PropTypes.string.isRequired,
+//   changeFilter:PropTypes.func.isRequired,
+// }
