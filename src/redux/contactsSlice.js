@@ -53,9 +53,10 @@ export const contactsSlice = createSlice({
   },
 });
 
-// const contactsActions = [fetchContacts, addContact, deleteContact];
-// const getActions = type =>
-//   isAnyOf(...contactsActions.map(action => action[type]));
+const contactsActions = [fetchContacts, addContact, deleteContact];
+const getActions = type => contactsActions.map(action => action[type]);
+
+
 
 export const contactsSliceBuilder = createSlice({
   name: 'contacts',
@@ -80,35 +81,42 @@ export const contactsSliceBuilder = createSlice({
         );
         state.items.splice(index, 1);
       })
+      // .addMatcher(
+      //   isAnyOf(
+      //     fetchContacts.pending,
+      //     addContact.pending,
+      //     deleteContact.pending
+      //   ),
+      //   state => {(state.isLoading = true)}
+      // )
+      // .addMatcher(
+      //   isAnyOf(
+      //     fetchContacts.rejected,
+      //     addContact.rejected,
+      //     deleteContact.rejected
+      //   ),
+      //   (state, action) => {
+      //     state.isLoading = false;
+      //     console.log(action);
+      //     console.log(action.payload);
+      //     state.error = action.payload;
+      //   }
+      // ),
       .addMatcher(
-        isAnyOf(
-          fetchContacts.pending,
-          addContact.pending,
-          deleteContact.pending
-        ),
-        state => (state.isLoading = true)
+        // isAnyOf(...contactsActions.map(action => action.pending)),
+        isAnyOf(...getActions('pending')),
+        state => {
+          state.isLoading = true;
+        }
       )
       .addMatcher(
-        isAnyOf(
-          fetchContacts.rejected,
-          addContact.rejected,
-          deleteContact.rejected
-        ),
+        // isAnyOf(...contactsActions.map(action => action.rejected)),
+        isAnyOf(...getActions('rejected')),
         (state, action) => {
           state.isLoading = false;
-          console.log(action);
-          console.log(action.payload);
           state.error = action.payload;
         }
       ),
-  // .addMatcher(
-  //   isAnyOf(...getActions('pending')),
-  //   state => (state.isLoading = true)
-  // )
-  // .addMatcher(isAnyOf(...getActions('rejected')), (state, action) => {
-  //   state.isLoading = false;
-  //   state.error = action.payload;
-  // }),
 });
 
 export const contactReducer = () => contactsSlice.reducer;
